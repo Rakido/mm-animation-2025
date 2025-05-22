@@ -1,0 +1,40 @@
+## We will build a animation library based on the news awesome gsap from https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js, it has all features now in free.
+
+## Implement more controls
+I want to able to control my text animation from differents settings
+A data-overflow : if set to true my letters or words should be hidden by the parent in overflow hidden
+
+Also those settings : 
+const staggerValue = parseFloat(element.getAttribute('data-stagger')) || 0.05; 
+const staggerMethod = element.getAttribute('data-stagger-method') || 'start';
+const delayValue = parseFloat(element.getAttribute('data-delay')) || 0;
+const durationValue = parseFloat(element.getAttribute('data-duration')) || 1;
+const easingValue = parseEasing(element.getAttribute('data-easing'));
+const animationTypes = element.getAttribute('data-animate') ? element.getAttribute('data-animate').split(' ') : [];
+const axis = element.getAttribute('data-axis');
+const axisValue = element.getAttribute('data-axis-value') || '100%';
+const rotateValue = parseFloat(element.getAttribute('data-rotate')) || 0;
+const skewValue = parseFloat(element.getAttribute('data-skew')) || 0;
+const scrubAttr = element.getAttribute('data-scrub');
+const scrub = scrubAttr === 'true' ? true : (scrubAttr ? parseFloat(scrubAttr) : false);
+const startTrigger = element.dataset.start || "top bottom-=10%";
+const endTrigger = element.dataset.end || "bottom top+=10%";
+const revert = element.hasAttribute('data-revert') ? 
+element.dataset.revert === 'false' : false; // Default to true if not specified
+
+Here's the helper for staggerMethod
+// Function to determine stagger order
+        const getStaggerOrder = (elements, method) => {
+            switch (method) {
+                case 'start':
+                    return elements; // No change needed
+                case 'end':
+                    return Array.from(elements).reverse();
+                case 'center':
+                    return elements.sort((a, b) => Math.abs(elements.length / 2 - Array.from(elements).indexOf(a)) - Math.abs(elements.length / 2 - Array.from(elements).indexOf(b)));
+                case 'random':
+                    return elements.sort(() => Math.random() - 0.5);
+                default:
+                    return elements;
+            }
+        };

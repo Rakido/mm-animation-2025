@@ -1,0 +1,19 @@
+## We will build a animation library based on the news awesome gsap from https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js, it has all features now in free.
+
+## Text animation
+We will rebuild a text animation. 
+Let's take examples : 
+
+<h2
+  data-splitting
+> Helloo world </h2>
+
+This means that data should be splitted in lines
+
+data-splitting can accept words chars or line, if nothung else setup it fade all lines in stagger.
+data-animate can be added for data-animate="fade-in" with a  data-animate="fade-in"
+  data-fade-start=between 0 and 1) or a  data-stagger="0.03" also data-animate="slide"
+  data-axis="y" accepting y x or z and a value 
+
+  Write a nice html docs using ta&ilwind, put tailwind and gsap lib in common filezs, for now use only gsap as js file. 
+  

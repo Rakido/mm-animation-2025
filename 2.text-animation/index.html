@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM Animation Library - Examples</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="text-animation.css">
+    <style>
+        .split-line, .split-word, .split-char {
+            display: inline-block;
+            position: relative;
+        }
+        [data-overflow="true"] {
+            overflow: hidden;
+        }
+        .example-section {
+            @apply mb-16 p-6 bg-white rounded-lg shadow-md;
+        }
+        .example-title {
+            @apply text-2xl font-bold mb-4 text-gray-800;
+        }
+        .example-subtitle {
+            @apply text-xl font-semibold mb-3 text-gray-700;
+        }
+        .example-description {
+            @apply text-sm text-gray-600 mb-4;
+        }
+        .example-container {
+           margin:100px;
+        }
+        .code-preview {
+            @apply text-xs bg-gray-100 p-2 rounded mt-2 font-mono overflow-x-auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">MM Animation Library - Examples</h1>
+
+        <!-- Basic Split Types -->
+        <section class="example-section">
+            <h2 class="example-title">Basic Split Types</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">Lines Split</h3>
+                <p class="example-description">Split text into lines with basic fade animation</p>
+                <h4 class="text-4xl mb-2" 
+                    data-splitting="lines" 
+                    data-animate="3D"
+                    data-stagger="0.5"
+                    data-animate="3D"
+                    data-rotation-x="-100%"
+                    data-transform-origin="50% 50% -200px"
+                    data-perspective="2000"
+                    >
+                    In this example, the text is divided into individual lines, and each line is animated to fade into view sequentially. The animation is designed to create a smooth and visually appealing transition, where each line appears one after the other with a slight delay.
+                </h4>
+                <div class="code-preview">
+                    data-splitting="lines" data-animate="fade-in" data-stagger="0.1"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Words Split</h3>
+                <p class="example-description">Split text into words with slide animation</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="words" 
+                    data-animate="slide"
+                    data-axis="y"
+                    data-stagger="0.5">
+                    This text is split into words. Each word will slide up with a stagger effect.
+                </h4>
+                <div class="code-preview">
+                    data-splitting="words" data-animate="slide" data-axis="y" data-stagger="0.05"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Characters Split</h3>
+                <p class="example-description">Split text into characters with fade and slide</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars" 
+                    data-animate="fade-in slide"
+                    data-axis="x"
+                    data-stagger="0.02">
+                    This text is split into characters. Each character will fade and slide with a stagger effect.
+                </h4>
+                <div class="code-preview">
+                    data-splitting="chars" data-animate="fade-in slide" data-axis="x" data-stagger="0.02"
+                </div>
+            </div>
+        </section>
+
+        <!-- Stagger Methods -->
+        <section class="example-section">
+            <h2 class="example-title">Stagger Methods</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">Start Stagger</h3>
+                <p class="example-description">Animation starts from the beginning</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars" 
+                    data-animate="slide"
+                    data-stagger="0.03"
+                    data-stagger-method="start">
+                    This text animates from start to end.
+                </h4>
+                <div class="code-preview">
+                    data-stagger-method="start"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">End Stagger</h3>
+                <p class="example-description">Animation starts from the end</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars" 
+                    data-animate="slide"
+                    data-stagger="0.03"
+                    data-stagger-method="end">
+                    This text animates from end to start.
+                </h4>
+                <div class="code-preview">
+                    data-stagger-method="end"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Center Stagger</h3>
+                <p class="example-description">Animation starts from the center</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars" 
+                    data-animate="slide"
+                    data-stagger="0.03"
+                    data-stagger-method="center">
+                    This text animates from the center outward.
+                </h4>
+                <div class="code-preview">
+                    data-stagger-method="center"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Random Stagger</h3>
+                <p class="example-description">Animation elements in random order</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars" 
+                    data-animate="slide"
+                    data-stagger="0.03"
+                    data-stagger-method="random">
+                    This text animates in random order.
+                </h4>
+                <div class="code-preview">
+                    data-stagger-method="random"
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D Animations -->
+        <section class="example-section">
+            <h2 class="example-title">3D Animations</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">Basic 3D Rotation</h3>
+                <p class="example-description">Simple 3D rotation with default settings</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="lines"
+                    data-animate="3D"
+                    data-rotation-x="-100"
+                    data-transform-origin="50% 50% -160px"
+                    data-stagger="0.1">
+                    This text rotates in 3D space with default settings.
+                </h4>
+                <div class="code-preview">
+                    data-animate="3D" data-rotation-x="-100" data-transform-origin="50% 50% -160px"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Custom 3D Perspective</h3>
+                <p class="example-description">3D rotation with custom perspective</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="lines"
+                    data-animate="3D"
+                    data-rotation-x="-180"
+                    data-transform-origin="50% 50% -200px"
+                    data-perspective="2000"
+                    data-stagger="0.15">
+                    This text has a deeper 3D perspective effect.
+                </h4>
+                <div class="code-preview">
+                    data-perspective="2000" data-rotation-x="-180" data-transform-origin="50% 50% -200px"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">3D with Center Stagger</h3>
+                <p class="example-description">3D rotation with center stagger effect</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="lines"
+                    data-animate="3D"
+                    data-rotation-x="-90"
+                    data-transform-origin="50% 50% -120px"
+                    data-stagger="0.1"
+                    data-stagger-method="center">
+                    This text rotates from the center outward in 3D space.
+                </h4>
+                <div class="code-preview">
+                    data-stagger-method="center" data-rotation-x="-90"
+                </div>
+            </div>
+        </section>
+
+        <!-- Easing Functions -->
+        <section class="example-section">
+            <h2 class="example-title">Easing Functions</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">Power Easing</h3>
+                <p class="example-description">Different power easing functions</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="power1"
+                    data-stagger="0.02">
+                    Power1 easing - gentle acceleration
+                </h4>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="power2"
+                    data-stagger="0.02">
+                    Power2 easing - moderate acceleration
+                </h4>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="power3"
+                    data-stagger="0.02">
+                    Power3 easing - strong acceleration
+                </h4>
+                <div class="code-preview">
+                    data-easing="power1|power2|power3"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Special Easing</h3>
+                <p class="example-description">Special easing functions for unique effects</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="back"
+                    data-stagger="0.02">
+                    Back easing - overshoots the target
+                </h4>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="elastic"
+                    data-stagger="0.02">
+                    Elastic easing - bounces like a spring
+                </h4>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-easing="bounce"
+                    data-stagger="0.02">
+                    Bounce easing - bounces at the end
+                </h4>
+                <div class="code-preview">
+                    data-easing="back|elastic|bounce"
+                </div>
+            </div>
+        </section>
+
+        <!-- Scroll Animations -->
+        <section class="example-section">
+            <h2 class="example-title">Scroll Animations</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">Basic Scroll Trigger</h3>
+                <p class="example-description">Animation triggers on scroll</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-scroll="true"
+                    data-stagger="0.02">
+                    This text animates when scrolled into view.
+                </h4>
+                <div class="code-preview">
+                    data-scroll="true"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Scrub Animation</h3>
+                <p class="example-description">Animation scrubs with scroll position</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-scroll="true"
+                    data-scrub="0.5"
+                    data-stagger="0.02">
+                    This text scrubs with the scroll position.
+                </h4>
+                <div class="code-preview">
+                    data-scroll="true" data-scrub="0.5"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Custom Trigger Points</h3>
+                <p class="example-description">Animation with custom trigger points</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-scroll="true"
+                    data-start="top center"
+                    data-end="bottom center"
+                    data-stagger="0.02">
+                    This text animates between custom trigger points.
+                </h4>
+                <div class="code-preview">
+                    data-start="top center" data-end="bottom center"
+                </div>
+            </div>
+        </section>
+
+        <!-- Combined Effects -->
+        <section class="example-section">
+            <h2 class="example-title">Combined Effects</h2>
+            
+            <div class="example-container">
+                <h3 class="example-subtitle">3D with Fade and Slide</h3>
+                <p class="example-description">Combining multiple animation types</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="lines"
+                    data-animate="3D fade-in slide"
+                    data-rotation-x="-90"
+                    data-transform-origin="50% 50% -120px"
+                    data-axis="y"
+                    data-stagger="0.1"
+                    data-stagger-method="center"
+                    data-duration="1.2"
+                    data-easing="power3">
+                    This text combines 3D rotation with fade and slide effects.
+                </h4>
+                <div class="code-preview">
+                    data-animate="3D fade-in slide" data-stagger-method="center" data-duration="1.2"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Complex Scroll Animation</h3>
+                <p class="example-description">Complex animation with scroll trigger</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="fade-in slide"
+                    data-axis="y"
+                    data-axis-value="50px"
+                    data-scroll="true"
+                    data-scrub="0.5"
+                    data-stagger="0.03"
+                    data-stagger-method="random"
+                    data-duration="1.5"
+                    data-easing="elastic"
+                    data-overflow="true">
+                    This text combines multiple effects with scroll scrubbing.
+                </h4>
+                <div class="code-preview">
+                    data-animate="fade-in slide" data-scrub="0.5" data-stagger-method="random" data-easing="elastic"
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="text-animations.js"></script>
+</body>
+</html>

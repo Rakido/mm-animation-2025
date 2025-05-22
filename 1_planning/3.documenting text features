@@ -1,0 +1,6 @@
+
+## We will build a animation library based on the news awesome gsap from https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js, it has all features now in free.
+
+## Implement documentation
+Implement markdow doc that document each data-attribute and the parameters it can take like you have https://gsap.com/docs/v3/Plugins/SplitText/ in  Config Object Settings
+Create it in 2.text-animation/features.md

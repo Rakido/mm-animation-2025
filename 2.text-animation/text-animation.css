@@ -1,0 +1,7 @@
+.split-line, .split-word, .split-char {
+  display: inline-block;
+  position: relative;
+}
+[data-overflow="true"] {
+  overflow: hidden;
+}
