@@ -3,7 +3,7 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 
 // Helper function to parse easing
 function parseEasing(easing) {
-    if (!easing) return "power2.out";
+    if (!easing) return "0.39, 0.01, 0.7, 0.99";
     const easingMap = {
         "power1": "power1.out",
         "power2": "power2.out",
@@ -120,6 +120,17 @@ function initTextAnimations() {
             if (!elementsToAnimate || !elementsToAnimate.length) {
                 console.warn(`No elements found for splitting type: ${splittingType}`);
                 return;
+            }
+
+            // Wrap each line in a parent div with overflow hidden if splitting by lines
+            if (splittingType === 'lines') {
+                elementsToAnimate.forEach(line => {
+                    const wrapper = document.createElement('div');
+                    wrapper.style.overflow = 'hidden';
+                    wrapper.style.display = 'block';
+                    line.parentNode.insertBefore(wrapper, line);
+                    wrapper.appendChild(line);
+                });
             }
 
             const orderedElements = getStaggerOrder(elementsToAnimate, staggerMethod);

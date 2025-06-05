@@ -13,13 +13,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="text-animation.css">
     <style>
-        .split-line, .split-word, .split-char {
-            display: inline-block;
-            position: relative;
-        }
-        [data-overflow="true"] {
-            overflow: hidden;
-        }
         .example-section {
             @apply mb-16 p-6 bg-white rounded-lg shadow-md;
         }
@@ -53,12 +46,8 @@
                 <p class="example-description">Split text into lines with basic fade animation</p>
                 <h4 class="text-4xl mb-2" 
                     data-splitting="lines" 
-                    data-animate="3D"
-                    data-stagger="0.5"
-                    data-animate="3D"
-                    data-rotation-x="-100%"
-                    data-transform-origin="50% 50% -200px"
-                    data-perspective="2000"
+                    data-animate="slide"
+                    data-stagger="0.3"
                     >
                     In this example, the text is divided into individual lines, and each line is animated to fade into view sequentially. The animation is designed to create a smooth and visually appealing transition, where each line appears one after the other with a slight delay.
                 </h4>
