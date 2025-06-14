@@ -164,9 +164,6 @@ function initTextAnimations() {
 
             const orderedElements = getStaggerOrder(elementsToAnimate, staggerMethod);
 
-            // Debug logging
-            console.log(`Splitting type: ${splittingType}, Elements count: ${orderedElements.length}, Stagger: ${staggerValue}, Method: ${staggerMethod}`);
-
             // Set initial state based on animation types
             let initialState = {};
             let animationVars = {};
