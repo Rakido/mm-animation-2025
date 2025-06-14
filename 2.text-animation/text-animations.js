@@ -157,20 +157,25 @@ function initTextAnimations() {
                     ease: easingValue
                 };
             } else {
+                // Check if this is a pure fade-in animation
+                const isPureFadeIn = animationTypes.length === 1 && animationTypes.includes('fade-in');
+                
                 initialState = {
                     opacity: animationTypes.includes('fade-in') ? 0 : 1,
-                    y: axis === 'y' ? axisValue : 0,
-                    x: axis === 'x' ? axisValue : 0,
-                    z: axis === 'z' ? axisValue : 0,
+                    // Only apply movement transforms if not a pure fade-in
+                    y: (!isPureFadeIn && axis === 'y') ? axisValue : 0,
+                    x: (!isPureFadeIn && axis === 'x') ? axisValue : 0,
+                    z: (!isPureFadeIn && axis === 'z') ? axisValue : 0,
                     rotation: rotateValue,
                     skewX: skewValue,
                     skewY: skewValue
                 };
                 animationVars = {
                     opacity: 1,
-                    y: 0,
-                    x: 0,
-                    z: 0,
+                    // Only animate movement transforms if not a pure fade-in
+                    y: (!isPureFadeIn) ? 0 : undefined,
+                    x: (!isPureFadeIn) ? 0 : undefined,
+                    z: (!isPureFadeIn) ? 0 : undefined,
                     rotation: 0,
                     skewX: 0,
                     skewY: 0,
