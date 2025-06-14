@@ -43,45 +43,48 @@
             
             <div class="example-container">
                 <h3 class="example-subtitle">Lines Split</h3>
-                <p class="example-description">Split text into lines with basic fade animation</p>
+                <p class="example-description">Split text into lines with basic fade animation (scroll-triggered)</p>
                 <h4 class="text-4xl mb-2" 
                     data-splitting="lines" 
                     data-animate="slide"
                     data-stagger="0.092"
                     >
-                    In this example, the text is divided into individual lines, and each line is animated to fade into view sequentially. The animation is designed to create a smooth and visually appealing transition, where each line appears one after the other with a slight delay.
+                    In this example, the text is divided into individual lines, and each line is animated to fade into view sequentially when scrolled into view. The animation is designed to create a smooth and visually appealing transition, where each line appears one after the other with a slight delay.
                 </h4>
                 <div class="code-preview">
                     data-splitting="lines" data-animate="fade-in" data-stagger="0.1"
+                    // Scroll-triggered by default with 0.2ms delay
                 </div>
             </div>
 
             <div class="example-container">
                 <h3 class="example-subtitle">Words Split</h3>
-                <p class="example-description">Split text into words with slide animation</p>
+                <p class="example-description">Split text into words with slide animation (scroll-triggered)</p>
                 <h4 class="text-xl mb-2" 
                     data-splitting="words" 
                     data-animate="slide"
                     data-axis="y"
                     data-stagger="0.5">
-                    This text is split into words. Each word will slide up with a stagger effect.
+                    This text is split into words. Each word will slide up with a stagger effect when scrolled into view.
                 </h4>
                 <div class="code-preview">
                     data-splitting="words" data-animate="slide" data-axis="y" data-stagger="0.05"
+                    // Scroll-triggered by default with 0.2ms delay
                 </div>
             </div>
 
             <div class="example-container">
                 <h3 class="example-subtitle">Characters Split</h3>
-                <p class="example-description">Split text into characters with fade and slide</p>
+                <p class="example-description">Split text into characters with fade animation (scroll-triggered by default)</p>
                 <h4 class="text-xl mb-2" 
                     data-splitting="chars" 
                     data-animate="fade-in"
-                    data-stagger="1">
-                    This text is split into characters. Each character will fade with a stagger effect.
+                    data-stagger="0.02">
+                    This text is split into characters. Each character will fade with a stagger effect when scrolled into view.
                 </h4>
                 <div class="code-preview">
-                    data-splitting="chars" data-animate="fade-in" data-axis="x" data-stagger="0.02"
+                    data-splitting="chars" data-animate="fade-in" data-stagger="0.02"
+                    // Scroll-triggered by default with 0.2ms delay
                 </div>
             </div>
         </section>
@@ -274,17 +277,78 @@
             <h2 class="example-title">Scroll Animations</h2>
             
             <div class="example-container">
-                <h3 class="example-subtitle">Basic Scroll Trigger</h3>
-                <p class="example-description">Animation triggers on scroll</p>
+                <h3 class="example-subtitle">Default Scroll Reveal</h3>
+                <p class="example-description">All animations are scroll-triggered by default with 0.2ms delay (no replay)</p>
                 <h4 class="text-xl mb-2" 
                     data-splitting="chars"
                     data-animate="slide"
-                    data-scroll="true"
                     data-stagger="0.02">
-                    This text animates when scrolled into view.
+                    This text animates when scrolled into view (default behavior, no replay).
                 </h4>
                 <div class="code-preview">
-                    data-scroll="true"
+                    // No data-scroll-reveal needed - it's the default behavior
+                    // No data-revert needed - animations don't replay by default
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Custom Scroll Reveal Delay</h3>
+                <p class="example-description">Custom delay when element comes into view</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-scroll-reveal-value="0.5"
+                    data-stagger="0.02">
+                    This text has a custom 0.5ms delay when scrolled into view.
+                </h4>
+                <div class="code-preview">
+                    data-scroll-reveal-value="0.5"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Disable Scroll Reveal</h3>
+                <p class="example-description">Animation plays immediately without scroll trigger</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-scroll-reveal="false"
+                    data-stagger="0.02">
+                    This text animates immediately without waiting for scroll.
+                </h4>
+                <div class="code-preview">
+                    data-scroll-reveal="false"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Enable Animation Replay</h3>
+                <p class="example-description">Animation replays when element leaves and re-enters viewport</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-revert="true"
+                    data-stagger="0.02">
+                    This text replays the animation when scrolled out and back in.
+                </h4>
+                <div class="code-preview">
+                    data-revert="true"
+                </div>
+            </div>
+
+            <div class="example-container">
+                <h3 class="example-subtitle">Legacy Scroll Trigger</h3>
+                <p class="example-description">Animation with custom trigger points</p>
+                <h4 class="text-xl mb-2" 
+                    data-splitting="chars"
+                    data-animate="slide"
+                    data-start="top center"
+                    data-end="bottom center"
+                    data-stagger="0.02">
+                    This text animates between custom trigger points.
+                </h4>
+                <div class="code-preview">
+                    data-start="top center" data-end="bottom center"
                 </div>
             </div>
 
@@ -294,30 +358,12 @@
                 <h4 class="text-xl mb-2" 
                     data-splitting="chars"
                     data-animate="slide"
-                    data-scroll="true"
                     data-scrub="0.5"
                     data-stagger="0.02">
                     This text scrubs with the scroll position.
                 </h4>
                 <div class="code-preview">
-                    data-scroll="true" data-scrub="0.5"
-                </div>
-            </div>
-
-            <div class="example-container">
-                <h3 class="example-subtitle">Custom Trigger Points</h3>
-                <p class="example-description">Animation with custom trigger points</p>
-                <h4 class="text-xl mb-2" 
-                    data-splitting="chars"
-                    data-animate="slide"
-                    data-scroll="true"
-                    data-start="top center"
-                    data-end="bottom center"
-                    data-stagger="0.02">
-                    This text animates between custom trigger points.
-                </h4>
-                <div class="code-preview">
-                    data-start="top center" data-end="bottom center"
+                    data-scrub="0.5"
                 </div>
             </div>
         </section>

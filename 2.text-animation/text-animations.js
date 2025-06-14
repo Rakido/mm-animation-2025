@@ -3,7 +3,7 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 
 // Helper function to parse easing
 function parseEasing(easing) {
-    if (!easing) return "0.39, 0.01, 0.7, 0.99";
+    if (!easing) return "0.39, 0.01, 0.07, 0.99";
     const easingMap = {
         "power1": "power1.out",
         "power2": "power2.out",
@@ -77,7 +77,7 @@ function initTextAnimations() {
             setupOverflow(element, animationTypes);
             
             // Animation timing and control parameters
-            const staggerValue = parseFloat(element.getAttribute('data-stagger')) || 0.05;
+            const staggerValue = parseFloat(element.getAttribute('data-stagger')) || 0.092;
             const staggerMethod = element.getAttribute('data-stagger-method') || 'start';
             const delayValue = parseFloat(element.getAttribute('data-delay')) || 0;
             const durationValue = parseFloat(element.getAttribute('data-duration')) || 1;
@@ -100,11 +100,26 @@ function initTextAnimations() {
             const startTrigger = element.dataset.start || "top bottom-=10%";
             const endTrigger = element.dataset.end || "bottom top+=10%";
             const revert = element.hasAttribute('data-revert') ? 
-                element.dataset.revert === 'false' : true;
+                element.dataset.revert === 'true' : false; // Default to false
+            
+            // New scroll reveal parameters
+            const scrollRevealAttr = element.getAttribute('data-scroll-reveal');
+            const scrollReveal = scrollRevealAttr === 'false' ? false : true; // Default to true
+            const scrollRevealValue = element.getAttribute('data-scroll-reveal-value') || "0.2"; // Default 0.2ms delay
 
             // Set perspective on parent if 3D animation is used
             if (animationTypes.includes('3D')) {
-                element.style.perspective = `${perspective}px`;
+                // Create a wrapper with perspective for 3D animations
+                if (!element.parentElement.classList.contains('perspective-wrapper')) {
+                    const wrapper = document.createElement('div');
+                    wrapper.classList.add('perspective-wrapper');
+                    wrapper.style.perspective = `${perspective}px`;
+                    wrapper.style.display = 'inline-block';
+                    element.parentNode.insertBefore(wrapper, element);
+                    wrapper.appendChild(element);
+                } else {
+                    element.parentElement.style.perspective = `${perspective}px`;
+                }
             }
 
             // Split the text using SplitText.create()
@@ -116,7 +131,21 @@ function initTextAnimations() {
             });
 
             // Get the elements to animate based on splitting type
-            const elementsToAnimate = split[splittingType];
+            let elementsToAnimate;
+            switch (splittingType) {
+                case 'lines':
+                    elementsToAnimate = split.lines;
+                    break;
+                case 'words':
+                    elementsToAnimate = split.words;
+                    break;
+                case 'chars':
+                    elementsToAnimate = split.chars;
+                    break;
+                default:
+                    elementsToAnimate = split.lines;
+            }
+            
             if (!elementsToAnimate || !elementsToAnimate.length) {
                 console.warn(`No elements found for splitting type: ${splittingType}`);
                 return;
@@ -135,6 +164,9 @@ function initTextAnimations() {
 
             const orderedElements = getStaggerOrder(elementsToAnimate, staggerMethod);
 
+            // Debug logging
+            console.log(`Splitting type: ${splittingType}, Elements count: ${orderedElements.length}, Stagger: ${staggerValue}, Method: ${staggerMethod}`);
+
             // Set initial state based on animation types
             let initialState = {};
             let animationVars = {};
@@ -150,12 +182,14 @@ function initTextAnimations() {
                     opacity: 1,
                     duration: durationValue,
                     delay: delayValue,
-                    stagger: {
-                        amount: staggerValue,
-                        from: staggerMethod
-                    },
+                    stagger: staggerValue,
                     ease: easingValue
                 };
+                
+                // Apply transform origin to each element individually
+                orderedElements.forEach(el => {
+                    gsap.set(el, { transformOrigin: transformOrigin });
+                });
             } else {
                 // Check if this is a pure fade-in animation
                 const isPureFadeIn = animationTypes.length === 1 && animationTypes.includes('fade-in');
@@ -181,10 +215,7 @@ function initTextAnimations() {
                     skewY: 0,
                     duration: durationValue,
                     delay: delayValue,
-                    stagger: {
-                        amount: staggerValue,
-                        from: staggerMethod
-                    },
+                    stagger: staggerValue,
                     ease: easingValue
                 };
             }
@@ -194,20 +225,33 @@ function initTextAnimations() {
             // Create animation
             const animation = gsap.to(orderedElements, animationVars);
 
-            // Create ScrollTrigger if needed
-            if (element.hasAttribute('data-scroll')) {
+            // Create ScrollTrigger if scroll reveal is enabled (default behavior)
+            if (scrollReveal) {
                 ScrollTrigger.create({
                     trigger: element,
                     animation: animation,
                     start: startTrigger,
                     end: endTrigger,
                     scrub: scrub,
-                    toggleActions: revert ? "play none none reverse" : "play none none none",
-                    onEnter: () => animation.play(),
+                    toggleActions: revert ? "play none none reverse" : "play none none none", // Default: no replay
+                    onEnter: () => {
+                        // Add the scroll reveal delay
+                        setTimeout(() => {
+                            animation.play();
+                        }, parseFloat(scrollRevealValue));
+                    },
                     onLeave: () => revert && animation.reverse(),
-                    onEnterBack: () => animation.play(),
+                    onEnterBack: () => {
+                        // Add the scroll reveal delay
+                        setTimeout(() => {
+                            animation.play();
+                        }, parseFloat(scrollRevealValue));
+                    },
                     onLeaveBack: () => revert && animation.reverse()
                 });
+            } else {
+                // If scroll reveal is disabled, play animation immediately
+                animation.play();
             }
         } catch (error) {
             console.error('Error initializing animation for element:', element, error);

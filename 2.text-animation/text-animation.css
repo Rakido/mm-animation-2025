@@ -5,3 +5,20 @@
 [data-overflow="true"] {
   overflow: hidden;
 }
+
+/* 3D Animation Support */
+.perspective-wrapper {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.split-line, .split-word, .split-char {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Ensure proper 3D rendering */
+[data-animate*="3D"] {
+  transform-style: preserve-3d;
+}
